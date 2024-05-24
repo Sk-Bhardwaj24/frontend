@@ -8,42 +8,39 @@ import {
   selectFuseMessageOptions,
   hideMessage,
 } from "../../store/Message";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import ClearIcon from "@mui/icons-material/Clear";
-import { amber, blue, green } from "@mui/material/colors";
+import { amber, blue, green, red } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 import SnackbarContent from "@mui/material/SnackbarContent";
 import Typography from "@mui/material/Typography";
 import { memo } from "react";
 interface FuseMessageProps {
   variant: "success" | "warning" | "error" | "info";
-  theme: any;
 }
-const StyledSnackbar = styled(Snackbar)(
-  ({ theme, variant }: FuseMessageProps) => ({
-    "& .FuseMessage-content": {
-      ...(variant === "success" && {
-        backgroundColor: green[600],
-        color: "#FFFFFF",
-      }),
+const StyledSnackbar = styled(Snackbar)(({ variant }: any) => ({
+  "& .FuseMessage-content": {
+    ...(variant === "success" && {
+      backgroundColor: green[600],
+      color: "#FFFFFF",
+    }),
 
-      ...(variant === "error" && {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.getContrastText(theme.palette.error.dark),
-      }),
+    ...(variant === "error" && {
+      backgroundColor: red[600],
+      color: "#FFFFFF",
+    }),
 
-      ...(variant === "info" && {
-        backgroundColor: blue[600],
-        color: "#FFFFFF",
-      }),
+    ...(variant === "info" && {
+      backgroundColor: blue[600],
+      color: "#FFFFFF",
+    }),
 
-      ...(variant === "warning" && {
-        backgroundColor: amber[600],
-        color: "#FFFFFF",
-      }),
-    },
-  })
-);
+    ...(variant === "warning" && {
+      backgroundColor: amber[600],
+      color: "#FFFFFF",
+    }),
+  },
+}));
 
 const variantIcon = {
   success: "check_circle",
@@ -59,6 +56,7 @@ function FuseMessage() {
 
   return (
     <StyledSnackbar
+      // theme="any"
       {...options}
       open={state}
       onClose={() => dispatch(hideMessage())}
@@ -74,11 +72,6 @@ function FuseMessage() {
         className="FuseMessage-content"
         message={
           <div className="flex items-center">
-            {/* {variantIcon[options?.variant] && (
-              <FuseSvgIcon color="inherit">
-                {variantIcon[options.variant]}
-              </FuseSvgIcon>
-            )} */}
             <Typography className="mx-8">{options.message}</Typography>
           </div>
         }
